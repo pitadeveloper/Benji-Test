@@ -13,7 +13,7 @@ const ProjectDetail = () => {
   const tasks = getProjectTasks(parseInt(id));
   
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
-  const [taskFormData, setTaskFormData] = useState({ title: '', priority: 'medium' });
+  const [taskFormData, setTaskFormData] = useState({ title: '', priority: 'low' });
 
   if (!project) {
     return (
@@ -35,7 +35,7 @@ const ProjectDetail = () => {
     e.preventDefault();
     if (taskFormData.title.trim()) {
       addTask(project.id, taskFormData.title, taskFormData.priority);
-      setTaskFormData({ title: '', priority: 'medium' });
+      setTaskFormData({ title: '', priority: 'low' });
       setIsAddTaskModalOpen(false);
     }
   };
@@ -219,7 +219,7 @@ const ProjectDetail = () => {
               Priority
             </label>
             <div className="flex gap-2">
-              {['low', 'medium', 'high'].map((priority) => (
+              {['low', 'high'].map((priority) => (
                 <button
                   key={priority}
                   type="button"
