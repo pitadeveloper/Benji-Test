@@ -219,7 +219,7 @@ const ProjectDetail = () => {
               Priority
             </label>
             <div className="flex gap-2">
-              {['low', 'high'].map((priority) => (
+              {['low', 'medium', 'high'].map((priority) => (
                 <button
                   key={priority}
                   type="button"
