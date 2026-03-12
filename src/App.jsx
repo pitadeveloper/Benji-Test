@@ -1,3 +1,4 @@
+// Temporary test comment by MCP agent
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
