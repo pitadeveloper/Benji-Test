@@ -18,10 +18,10 @@ const initialProjects = [
 
 const initialTasks = [
   { id: 1, projectId: 1, title: 'Design homepage mockup', completed: false, priority: 'high', createdAt: new Date().toISOString() },
-  { id: 2, projectId: 1, title: 'Review color palette', completed: true, priority: 'medium', createdAt: new Date().toISOString() },
+  { id: 2, projectId: 1, title: 'Review color palette', completed: true, priority: 'low', createdAt: new Date().toISOString() },
   { id: 3, projectId: 2, title: 'Setup React Native project', completed: false, priority: 'high', createdAt: new Date().toISOString() },
   { id: 4, projectId: 2, title: 'Design app icon', completed: false, priority: 'low', createdAt: new Date().toISOString() },
-  { id: 5, projectId: 3, title: 'Create social media posts', completed: false, priority: 'medium', createdAt: new Date().toISOString() },
+  { id: 5, projectId: 3, title: 'Create social media posts', completed: false, priority: 'low', createdAt: new Date().toISOString() },
 ];
 
 export const AppProvider = ({ children }) => {
