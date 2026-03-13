@@ -74,6 +74,16 @@ const Tasks = () => {
                 High
               </button>
               <button
+                onClick={() => setFilterPriority('medium')}
+                className={`px-4 py-2 rounded-lg border transition-colors ${
+                  filterPriority === 'medium'
+                    ? 'bg-yellow-500 text-white border-yellow-500'
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-yellow-500'
+                }`}
+              >
+                Medium
+              </button>
+              <button
                 onClick={() => setFilterPriority('low')}
                 className={`px-4 py-2 rounded-lg border transition-colors ${
                   filterPriority === 'low'
