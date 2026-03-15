@@ -74,6 +74,16 @@ const Notes = () => {
                 High
               </button>
               <button
+                onClick={() => setFilterPriority('medium')}
+                className={`px-4 py-2 rounded-lg border transition-colors font-medium ${
+                  filterPriority === 'medium'
+                    ? 'bg-orange-500 text-white border-orange-500'
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-orange-500'
+                }`}
+              >
+                Medium
+              </button>
+              <button
                 onClick={() => setFilterPriority('low')}
                 className={`px-4 py-2 rounded-lg border transition-colors font-medium ${
                   filterPriority === 'low'
@@ -214,7 +224,9 @@ const Notes = () => {
                 <div className="flex items-center gap-2">
                   <span className={`text-xs px-2 py-1 rounded-full font-semibold ${
                     note.priority === 'high' ? 'bg-red-200 text-red-800' :
-                    'bg-green-200 text-green-800'
+                    note.priority === 'medium' ? 'bg-orange-200 text-orange-800' :
+                    note.priority === 'low' ? 'bg-green-200 text-green-800' :
+                    'bg-gray-200 text-gray-800'
                   }`}>
                     {note.priority}
                   </span>
