@@ -14,14 +14,14 @@ const Settings = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 min-h-screen">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Settings</h1>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent mb-2">Settings</h1>
         <p className="text-gray-600">Manage your application preferences.</p>
       </div>
 
       <div className="max-w-2xl space-y-6">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6">
           <div className="flex items-center gap-3 mb-4">
             <Palette className="text-blue-600" size={24} />
             <h2 className="text-xl font-semibold text-gray-800">Appearance</h2>
@@ -98,7 +98,7 @@ const Settings = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition-colors shadow-lg font-semibold"
           >
             <Save size={20} />
             Save Settings
@@ -108,10 +108,10 @@ const Settings = () => {
           )}
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+        <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-6 border border-yellow-200">
           <h3 className="font-semibold text-gray-800 mb-2">About</h3>
-          <p className="text-sm text-gray-600 mb-1">TaskFlow v1.0.0</p>
-          <p className="text-sm text-gray-600">A modern task and project management application</p>
+          <p className="text-sm text-gray-600 mb-1 font-medium">Smart Sticky Notes v1.0.0</p>
+          <p className="text-sm text-gray-600">A modern sticky notes and collection management app</p>
         </div>
       </div>
     </div>

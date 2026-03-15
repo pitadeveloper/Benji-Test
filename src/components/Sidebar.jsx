@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, FolderKanban, CheckSquare, Settings, Menu, X } from 'lucide-react';
+import { Home, Folder, StickyNote, Settings, Menu, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const Sidebar = () => {
@@ -8,20 +8,20 @@ const Sidebar = () => {
 
   const navItems = [
     { path: '/', icon: Home, label: 'Dashboard' },
-    { path: '/projects', icon: FolderKanban, label: 'Projects' },
-    { path: '/tasks', icon: CheckSquare, label: 'Tasks' },
+    { path: '/collections', icon: Folder, label: 'Collections' },
+    { path: '/notes', icon: StickyNote, label: 'All Notes' },
     { path: '/settings', icon: Settings, label: 'Settings' },
   ];
 
   return (
-    <aside className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 transition-all duration-300 ${sidebarCollapsed ? 'w-16' : 'w-64'}`}>
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
+    <aside className={`fixed left-0 top-0 h-full bg-gradient-to-b from-yellow-50 to-orange-50 border-r border-yellow-200 transition-all duration-300 ${sidebarCollapsed ? 'w-16' : 'w-64'}`}>
+      <div className="flex items-center justify-between p-4 border-b border-yellow-200">
         {!sidebarCollapsed && (
-          <h1 className="text-xl font-bold text-gray-800">TaskFlow</h1>
+          <h1 className="text-xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">Smart Sticky Notes</h1>
         )}
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="p-2 rounded-lg hover:bg-yellow-100 transition-colors text-yellow-700"
         >
           {sidebarCollapsed ? <Menu size={20} /> : <X size={20} />}
         </button>
@@ -36,8 +36,8 @@ const Sidebar = () => {
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  ? 'bg-yellow-200 text-yellow-900 shadow-sm'
+                  : 'text-yellow-800 hover:bg-yellow-100'
               }`
             }
           >

@@ -1,76 +1,71 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FolderKanban, CheckSquare, Clock, TrendingUp } from 'lucide-react';
+import { Folder, StickyNote, Clock, TrendingUp } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const Dashboard = () => {
-  const { projects, tasks } = useApp();
+  const { collections, notes } = useApp();
   const navigate = useNavigate();
 
-  const completedTasks = tasks.filter(t => t.completed).length;
-  const pendingTasks = tasks.filter(t => !t.completed).length;
-  const highPriorityTasks = tasks.filter(t => t.priority === 'high' && !t.completed).length;
+  const completedNotes = notes.filter(n => n.completed).length;
+  const pendingNotes = notes.filter(n => !n.completed).length;
+  const highPriorityNotes = notes.filter(n => n.priority === 'high' && !n.completed).length;
 
   const stats = [
-    { label: 'Total Projects', value: projects.length, icon: FolderKanban, color: 'bg-blue-500' },
-    { label: 'Completed Tasks', value: completedTasks, icon: CheckSquare, color: 'bg-green-500' },
-    { label: 'Pending Tasks', value: pendingTasks, icon: Clock, color: 'bg-yellow-500' },
-    { label: 'High Priority', value: highPriorityTasks, icon: TrendingUp, color: 'bg-red-500' },
+    { label: 'Total Collections', value: collections.length, icon: Folder, color: 'bg-yellow-400' },
+    { label: 'Completed Notes', value: completedNotes, icon: StickyNote, color: 'bg-green-400' },
+    { label: 'Pending Notes', value: pendingNotes, icon: Clock, color: 'bg-orange-400' },
+    { label: 'High Priority', value: highPriorityNotes, icon: TrendingUp, color: 'bg-red-400' },
   ];
 
-  const recentProjects = projects.slice(0, 3);
+  const recentCollections = collections.slice(0, 3);
 
   return (
-    <div className="p-8">
+    <div className="p-8 bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 min-h-screen">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Dashboard</h1>
-        <p className="text-gray-600">Welcome back! Here's your project overview.</p>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent mb-2">Dashboard</h1>
+        <p className="text-gray-600 text-lg">Welcome back! Here's your sticky notes overview.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-white rounded-lg shadow p-6">
+          <div key={index} className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
             <div className="flex items-center justify-between mb-4">
-              <div className={`${stat.color} p-3 rounded-lg`}>
+              <div className={`${stat.color} p-3 rounded-xl shadow-md`}>
                 <stat.icon className="text-white" size={24} />
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-1">{stat.value}</h3>
-            <p className="text-gray-600 text-sm">{stat.label}</p>
+            <h3 className="text-3xl font-bold text-gray-800 mb-1">{stat.value}</h3>
+            <p className="text-gray-600 text-sm font-medium">{stat.label}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Recent Projects</h2>
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recent Collections</h2>
           <div className="space-y-3">
-            {recentProjects.map((project) => {
-              const projectTasks = tasks.filter(t => t.projectId === project.id);
-              const completedCount = projectTasks.filter(t => t.completed).length;
-              const progress = projectTasks.length > 0 ? (completedCount / projectTasks.length) * 100 : 0;
+            {recentCollections.map((collection) => {
+              const collectionNotes = notes.filter(n => n.collectionId === collection.id);
+              const completedCount = collectionNotes.filter(n => n.completed).length;
+              const progress = collectionNotes.length > 0 ? (completedCount / collectionNotes.length) * 100 : 0;
 
               return (
                 <div
-                  key={project.id}
-                  onClick={() => navigate(`/projects/${project.id}`)}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-blue-500 cursor-pointer transition-colors"
+                  key={collection.id}
+                  onClick={() => navigate(`/collections/${collection.id}`)}
+                  className="p-4 rounded-xl cursor-pointer transition-all hover:shadow-lg transform hover:-rotate-1"
+                  style={{ backgroundColor: collection.color }}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: project.color }}
-                      />
-                      <h3 className="font-medium text-gray-800">{project.name}</h3>
-                    </div>
-                    <span className="text-sm text-gray-600">
-                      {completedCount}/{projectTasks.length} tasks
+                    <h3 className="font-bold text-gray-900">{collection.name}</h3>
+                    <span className="text-sm text-gray-700 font-semibold">
+                      {completedCount}/{collectionNotes.length} notes
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-white/50 rounded-full h-2">
                     <div
-                      className="bg-blue-500 h-2 rounded-full transition-all"
+                      className="bg-gray-900 h-2 rounded-full transition-all"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -80,37 +75,39 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Recent Tasks</h2>
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recent Notes</h2>
           <div className="space-y-3">
-            {tasks.slice(0, 5).map((task) => {
-              const project = projects.find(p => p.id === task.projectId);
+            {notes.slice(0, 5).map((note) => {
+              const collection = collections.find(c => c.id === note.collectionId);
               return (
                 <div
-                  key={task.id}
-                  className="p-4 border border-gray-200 rounded-lg"
+                  key={note.id}
+                  className={`p-4 rounded-xl shadow-md border-l-4 ${
+                    note.completed ? 'bg-gray-100' : 'bg-yellow-50'
+                  }`}
+                  style={{ borderLeftColor: collection?.color || '#fbbf24' }}
                 >
                   <div className="flex items-start gap-3">
                     <input
                       type="checkbox"
-                      checked={task.completed}
+                      checked={note.completed}
                       readOnly
                       className="mt-1"
                     />
                     <div className="flex-1">
-                      <p className={`font-medium ${task.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
-                        {task.title}
+                      <p className={`font-medium ${note.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+                        {note.content}
                       </p>
-                      {project && (
-                        <p className="text-sm text-gray-500 mt-1">{project.name}</p>
+                      {collection && (
+                        <p className="text-sm text-gray-500 mt-1 font-medium">{collection.name}</p>
                       )}
                     </div>
-                    <span className={`text-xs px-2 py-1 rounded ${
-                      task.priority === 'high' ? 'bg-red-100 text-red-700' :
-                      task.priority === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
+                    <span className={`text-xs px-2 py-1 rounded-full font-semibold ${
+                      note.priority === 'high' ? 'bg-red-200 text-red-800' :
+                      'bg-green-200 text-green-800'
                     }`}>
-                      {task.priority}
+                      {note.priority}
                     </span>
                   </div>
                 </div>

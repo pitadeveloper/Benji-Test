@@ -10,23 +10,23 @@ export const useApp = () => {
   return context;
 };
 
-const initialProjects = [
-  { id: 1, name: 'Website Redesign', color: '#3b82f6', createdAt: new Date().toISOString() },
-  { id: 2, name: 'Mobile App', color: '#10b981', createdAt: new Date().toISOString() },
-  { id: 3, name: 'Marketing Campaign', color: '#f59e0b', createdAt: new Date().toISOString() },
+const initialCollections = [
+  { id: 1, name: 'Work Ideas', color: '#fbbf24', createdAt: new Date().toISOString() },
+  { id: 2, name: 'Personal', color: '#a78bfa', createdAt: new Date().toISOString() },
+  { id: 3, name: 'Shopping List', color: '#fb923c', createdAt: new Date().toISOString() },
 ];
 
-const initialTasks = [
-  { id: 1, projectId: 1, title: 'Design homepage mockup', completed: false, priority: 'high', createdAt: new Date().toISOString() },
-  { id: 2, projectId: 1, title: 'Review color palette', completed: true, priority: 'low', createdAt: new Date().toISOString() },
-  { id: 3, projectId: 2, title: 'Setup React Native project', completed: false, priority: 'high', createdAt: new Date().toISOString() },
-  { id: 4, projectId: 2, title: 'Design app icon', completed: false, priority: 'low', createdAt: new Date().toISOString() },
-  { id: 5, projectId: 3, title: 'Create social media posts', completed: false, priority: 'low', createdAt: new Date().toISOString() },
+const initialNotes = [
+  { id: 1, collectionId: 1, content: 'Design new landing page with modern gradient', completed: false, priority: 'high', createdAt: new Date().toISOString() },
+  { id: 2, collectionId: 1, content: 'Update brand colors for consistency', completed: true, priority: 'low', createdAt: new Date().toISOString() },
+  { id: 3, collectionId: 2, content: 'Book dentist appointment for next week', completed: false, priority: 'high', createdAt: new Date().toISOString() },
+  { id: 4, collectionId: 2, content: 'Plan weekend hiking trip', completed: false, priority: 'low', createdAt: new Date().toISOString() },
+  { id: 5, collectionId: 3, content: 'Buy groceries - milk, eggs, bread', completed: false, priority: 'low', createdAt: new Date().toISOString() },
 ];
 
 export const AppProvider = ({ children }) => {
-  const [projects, setProjects] = useState(initialProjects);
-  const [tasks, setTasks] = useState(initialTasks);
+  const [collections, setCollections] = useState(initialCollections);
+  const [notes, setNotes] = useState(initialNotes);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [settings, setSettings] = useState({
     theme: 'light',
@@ -34,49 +34,49 @@ export const AppProvider = ({ children }) => {
     autoSave: true,
   });
 
-  const addProject = (name, color) => {
-    const newProject = {
+  const addCollection = (name, color) => {
+    const newCollection = {
       id: Date.now(),
       name,
-      color: color || '#6366f1',
+      color: color || '#fbbf24',
       createdAt: new Date().toISOString(),
     };
-    setProjects([...projects, newProject]);
-    return newProject;
+    setCollections([...collections, newCollection]);
+    return newCollection;
   };
 
-  const updateProject = (id, updates) => {
-    setProjects(projects.map(p => p.id === id ? { ...p, ...updates } : p));
+  const updateCollection = (id, updates) => {
+    setCollections(collections.map(c => c.id === id ? { ...c, ...updates } : c));
   };
 
-  const deleteProject = (id) => {
-    setProjects(projects.filter(p => p.id !== id));
-    setTasks(tasks.filter(t => t.projectId !== id));
+  const deleteCollection = (id) => {
+    setCollections(collections.filter(c => c.id !== id));
+    setNotes(notes.filter(n => n.collectionId !== id));
   };
 
-  const addTask = (projectId, title, priority = 'medium') => {
-    const newTask = {
+  const addNote = (collectionId, content, priority = 'low') => {
+    const newNote = {
       id: Date.now(),
-      projectId,
-      title,
+      collectionId,
+      content,
       completed: false,
       priority,
       createdAt: new Date().toISOString(),
     };
-    setTasks([...tasks, newTask]);
-    return newTask;
+    setNotes([...notes, newNote]);
+    return newNote;
   };
 
-  const updateTask = (id, updates) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, ...updates } : t));
+  const updateNote = (id, updates) => {
+    setNotes(notes.map(n => n.id === id ? { ...n, ...updates } : n));
   };
 
-  const deleteTask = (id) => {
-    setTasks(tasks.filter(t => t.id !== id));
+  const deleteNote = (id) => {
+    setNotes(notes.filter(n => n.id !== id));
   };
 
-  const toggleTaskComplete = (id) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  const toggleNoteComplete = (id) => {
+    setNotes(notes.map(n => n.id === id ? { ...n, completed: !n.completed } : n));
   };
 
   const toggleSidebar = () => {
@@ -87,30 +87,30 @@ export const AppProvider = ({ children }) => {
     setSettings({ ...settings, ...newSettings });
   };
 
-  const getProjectTasks = (projectId) => {
-    return tasks.filter(t => t.projectId === projectId);
+  const getCollectionNotes = (collectionId) => {
+    return notes.filter(n => n.collectionId === collectionId);
   };
 
-  const getProject = (id) => {
-    return projects.find(p => p.id === id);
+  const getCollection = (id) => {
+    return collections.find(c => c.id === id);
   };
 
   const value = {
-    projects,
-    tasks,
+    collections,
+    notes,
     sidebarCollapsed,
     settings,
-    addProject,
-    updateProject,
-    deleteProject,
-    addTask,
-    updateTask,
-    deleteTask,
-    toggleTaskComplete,
+    addCollection,
+    updateCollection,
+    deleteCollection,
+    addNote,
+    updateNote,
+    deleteNote,
+    toggleNoteComplete,
     toggleSidebar,
     updateSettings,
-    getProjectTasks,
-    getProject,
+    getCollectionNotes,
+    getCollection,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
